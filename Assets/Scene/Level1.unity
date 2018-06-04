@@ -467,7 +467,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1948085239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe07ce819d6a1415495a307a445eba20, type: 3}
+  m_Script: {fileID: 11500000, guid: 668e33fbf623f41a4a5547131185aec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
@@ -572,7 +572,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a22801367dd6e4d7aa9fe9191500eca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rabit: {fileID: 1948085245}
+  rabit: {fileID: 0}
 --- !u!4 &2036508585 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4452470142860672, guid: 7763f709c7eca4ab5a0a4d75746e2fc4,
