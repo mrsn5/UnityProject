@@ -232,7 +232,7 @@ Transform:
   m_LocalScale: {x: 6, y: 6, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1063037907 stripped
 Transform:
@@ -267,7 +267,7 @@ Transform:
   - {fileID: 1063037907}
   - {fileID: 2036508585}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1293611585
 Prefab:
@@ -410,10 +410,9 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2029539621}
+  m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1948085243
 Rigidbody2D:
@@ -458,7 +457,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.2}
+  m_Size: {x: 0.9, y: 1.2}
   m_EdgeRadius: 0
 --- !u!114 &1948085245
 MonoBehaviour:
@@ -471,6 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe07ce819d6a1415495a307a445eba20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 3
 --- !u!1 &2029539616
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,6 +483,7 @@ GameObject:
   - component: {fileID: 2029539619}
   - component: {fileID: 2029539618}
   - component: {fileID: 2029539617}
+  - component: {fileID: 2029539622}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -557,9 +558,21 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1948085242}
+  m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2029539622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2029539616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a22801367dd6e4d7aa9fe9191500eca8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rabit: {fileID: 1948085245}
 --- !u!4 &2036508585 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4452470142860672, guid: 7763f709c7eca4ab5a0a4d75746e2fc4,
