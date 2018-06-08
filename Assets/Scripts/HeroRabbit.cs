@@ -15,6 +15,7 @@ public class HeroRabbit : MonoBehaviour
     private Rigidbody2D rb = null;
     private SpriteRenderer sr = null;
     private Animator animator = null;
+    private Transform heroParent = null;
 
     private bool isGrounded = false;
     private bool jumpActive = false;
@@ -29,6 +30,7 @@ public class HeroRabbit : MonoBehaviour
         animator = GetComponent<Animator>();
         LevelController.current.setStartPosition(rb.transform.position);
         rb.freezeRotation = true;
+        this.heroParent = this.transform.parent;
     }
 
     // Update is called once per frame
@@ -79,7 +81,35 @@ public class HeroRabbit : MonoBehaviour
         RaycastHit2D hit2 = Physics2D.Linecast(from, to - new Vector3(.1f, 0f, 0f), layer_id);
         Debug.DrawLine(from, to - new Vector3(-.1f, 0f, 0f), Color.red);
         Debug.DrawLine(from, to - new Vector3(.1f, 0f, 0f), Color.red);
+
+        if (hit1 || hit2)
+        {
+            if(hit1.transform != null && hit1.transform.GetComponent<MovingPlatform>() != null)
+            { 
+                SetNewParent(this.transform, hit1.transform);
+            }
+            if (hit2.transform != null && hit2.transform.GetComponent<MovingPlatform>() != null)
+            {
+                SetNewParent(this.transform, hit2.transform);
+            }
+        }
+        else
+        {
+            SetNewParent(this.transform, this.heroParent);
+        }
+
+
         return hit1 || hit2;
+    }
+
+    static void SetNewParent(Transform obj, Transform new_parent)
+    {
+        if (obj.transform.parent != new_parent)
+        {
+            Vector3 pos = obj.transform.position;
+            obj.transform.parent = new_parent;
+            obj.transform.position = pos;
+        }
     }
 
 }
