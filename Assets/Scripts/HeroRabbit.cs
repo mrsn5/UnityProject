@@ -11,10 +11,16 @@ public class HeroRabbit : MonoBehaviour
     public float maxJumpTime = 2f;
     [SerializeField]
     public float jumpSpeed = 3f;
+    [SerializeField]
+    public float maxInvincibleTime = 4f;
 
     private bool isGrounded = false;
     private bool jumpActive = false;
     public bool isBig = true;
+    public bool isDead = false;
+    public bool isInvinc = false;
+
+    private float invincibleTime = 0f;
     private float jumpTime = 0f;
 
     private Rigidbody2D rb = null;
@@ -24,7 +30,6 @@ public class HeroRabbit : MonoBehaviour
 
     private Vector3 defaultSize;
 
-    // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -36,47 +41,58 @@ public class HeroRabbit : MonoBehaviour
         defaultSize = transform.lossyScale;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         // Moving
         float value = Input.GetAxis("Horizontal");
-        if (Mathf.Abs(value) > 0)
+        if (Mathf.Abs(value) > 0 && !isDead)
         {
             rb.velocity = new Vector2(value * speed, rb.velocity.y);
             sr.flipX = (value > 0) ? false : true;
         }
 
         // Sizing
-        SetSize((isBig) ? defaultSize : defaultSize * .5f);
+        SetSize((isBig) ? defaultSize : defaultSize * .7f);
 
+        // Jumping
         isGrounded = Grounded();
-
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded && !isDead)
         {
             jumpActive = true;
         }
 
         if (jumpActive)
         {
-            if (Input.GetButton("Jump"))
-            {
+            if (Input.GetButton("Jump")) {
                 jumpTime += Time.deltaTime;
                 if (jumpTime < maxJumpTime)
                 {
                     rb.velocity = new Vector2(rb.velocity.x, jumpSpeed * (1.0f - jumpTime / maxJumpTime));
                 }
-            }
-            else
-            {
+            } else {
                 jumpActive = false;
                 jumpTime = 0;
             }
         }
 
+        // Invincible
+        if (isInvinc) {
+            invincibleTime -= Time.deltaTime;
+            if (invincibleTime < 0) isInvinc = false;
+        }
+
         // Animation
         animator.SetBool("isRunning", Mathf.Abs(value) > 0);
         animator.SetBool("isJumping", !isGrounded);
+
+        // Respawn
+        if (isDead && Input.GetKeyDown("space"))
+        {
+            isBig = true;
+            isDead = false;
+            animator.SetBool("isDead", false);
+            LevelController.current.Respawn(this);
+        }
     }
 
     private bool Grounded() 
@@ -125,6 +141,31 @@ public class HeroRabbit : MonoBehaviour
         transform.localScale = new Vector3(size.x / transform.lossyScale.x, 
                                            size.y / transform.lossyScale.y, 
                                            size.z / transform.lossyScale.z);
+    }
+
+    public void UpSize()
+    {
+        if (!isBig) isBig = true;
+    }
+
+    public void DownSize()
+    {
+        if (isBig) {
+            isBig = false;
+            invincibleTime = maxInvincibleTime;
+            isInvinc = true;
+        } else Kill();
+    }
+
+    public void Kill()
+    {
+        isDead = true;
+        animator.SetBool("isDead", true);
+    }
+
+    public bool isInvincible()
+    {
+        return isInvinc;
     }
 
 }

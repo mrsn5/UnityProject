@@ -159,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58b984f38dd945b8ba5c9119ce69d5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveBy: {x: -4, y: 0, z: 0}
+  MoveBy: {x: 0, y: 0, z: 0}
   speed: 2
   waitingTime: 1
 --- !u!212 &212421022381058566

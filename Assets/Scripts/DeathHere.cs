@@ -9,7 +9,7 @@ public class DeathHere : MonoBehaviour
     {
         HeroRabbit rabbit = collider.GetComponent<HeroRabbit>();
         if (rabbit != null) { 
-            LevelController.current.onRabitDeath(rabbit);
+            LevelController.current.Respawn(rabbit);
         }
     }
      
