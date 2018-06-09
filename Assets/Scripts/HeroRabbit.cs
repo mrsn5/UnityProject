@@ -12,15 +12,17 @@ public class HeroRabbit : MonoBehaviour
     [SerializeField]
     public float jumpSpeed = 3f;
 
+    private bool isGrounded = false;
+    private bool jumpActive = false;
+    public bool isBig = true;
+    private float jumpTime = 0f;
+
     private Rigidbody2D rb = null;
     private SpriteRenderer sr = null;
     private Animator animator = null;
     private Transform heroParent = null;
 
-    private bool isGrounded = false;
-    private bool jumpActive = false;
-    private float jumpTime = 0f;
-
+    private Vector3 defaultSize;
 
     // Use this for initialization
     void Start()
@@ -30,19 +32,24 @@ public class HeroRabbit : MonoBehaviour
         animator = GetComponent<Animator>();
         LevelController.current.setStartPosition(rb.transform.position);
         rb.freezeRotation = true;
-        this.heroParent = this.transform.parent;
+        heroParent = transform.parent;
+        defaultSize = transform.lossyScale;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        // Moving
         float value = Input.GetAxis("Horizontal");
         if (Mathf.Abs(value) > 0)
         {
             rb.velocity = new Vector2(value * speed, rb.velocity.y);
             sr.flipX = (value > 0) ? false : true;
         }
-       
+
+        // Sizing
+        SetSize((isBig) ? defaultSize : defaultSize * .5f);
+
         isGrounded = Grounded();
 
         if (Input.GetButtonDown("Jump") && isGrounded)
@@ -77,8 +84,8 @@ public class HeroRabbit : MonoBehaviour
         Vector3 from = transform.position + Vector3.up * 0.3f;
         Vector3 to = transform.position + Vector3.down * 0.1f;
         int layer_id = 1 << LayerMask.NameToLayer("Ground");
-        RaycastHit2D hit1 = Physics2D.Linecast(from, to - new Vector3(-.1f, 0f, 0f), layer_id);
-        RaycastHit2D hit2 = Physics2D.Linecast(from, to - new Vector3(.1f, 0f, 0f), layer_id);
+        RaycastHit2D hit1 = Physics2D.Linecast(from - new Vector3(-.1f, 0f, 0f), to - new Vector3(-.1f, 0f, 0f), layer_id);
+        RaycastHit2D hit2 = Physics2D.Linecast(from - new Vector3(.1f, 0f, 0f), to - new Vector3(.1f, 0f, 0f), layer_id);
         Debug.DrawLine(from, to - new Vector3(-.1f, 0f, 0f), Color.red);
         Debug.DrawLine(from, to - new Vector3(.1f, 0f, 0f), Color.red);
 
@@ -110,6 +117,14 @@ public class HeroRabbit : MonoBehaviour
             obj.transform.parent = new_parent;
             obj.transform.position = pos;
         }
+    }
+
+    void SetSize(Vector3 size)
+    {
+        transform.localScale = Vector3.one;
+        transform.localScale = new Vector3(size.x / transform.lossyScale.x, 
+                                           size.y / transform.lossyScale.y, 
+                                           size.z / transform.lossyScale.z);
     }
 
 }
