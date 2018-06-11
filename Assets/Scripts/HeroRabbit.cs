@@ -78,7 +78,15 @@ public class HeroRabbit : MonoBehaviour
         // Invincible
         if (isInvinc) {
             invincibleTime -= Time.deltaTime;
-            if (invincibleTime < 0) isInvinc = false;
+            GetComponent<SpriteRenderer>().material.color =
+                new Color(1, 1 - invincibleTime % 1 / 2, 1 - invincibleTime % 1 / 2);
+            if (invincibleTime < 0)
+            {
+                isInvinc = false;
+                GetComponent<SpriteRenderer>().material.color =
+                    new Color(1, 1, 1);
+            }
+
         }
 
         // Animation
