@@ -15,14 +15,24 @@ public class Carrot : MonoBehaviour {
 
     public void Launch(float direct) {
         direction = new Vector3(direct, 0, 0);
-        GetComponent<SpriteRenderer>().flipX = (direct > 0) ? false : true;
+        transform.localScale = new Vector3((direct > 0) ? -1 : 1, transform.localScale.y, 1);
     }
 
     void Update()
     {
-        if (direction != null) 
+        transform.position += -direction * speed * Time.deltaTime;
+    }
+
+    void OnTriggerEnter2D(Collider2D collider) 
+    {
+        if (this.isActiveAndEnabled)
         {
-            transform.position += direction * speed * Time.deltaTime;
+            HeroRabbit rabbit = collider.GetComponent<HeroRabbit>();
+            if (rabbit != null)
+            {
+                rabbit.Kill();
+                Destroy(this.gameObject);
+            }
         }
     }
 
