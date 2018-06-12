@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61626704286185394}
   - component: {fileID: 114131931446016352}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Carrot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,7 +51,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.45, y: 0.021701485}
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8d43836d66654fed9a2dde3f0f83a61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 3
 --- !u!212 &212792537166377886
 SpriteRenderer:
   m_ObjectHideFlags: 1
