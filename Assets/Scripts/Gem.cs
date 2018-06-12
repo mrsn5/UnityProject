@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Gem : Collectable
 {
+    enum Color { BLUE, GREEN, RED };
+    [SerializeField]
+    private Color color = Color.BLUE;
+
     protected override void OnRabbitHit(HeroRabbit rabbit)
     {
-        LevelController.current.addGems(1);
+        LevelController.current.addGems((int)color);
         this.CollectedHide();
     }
 }

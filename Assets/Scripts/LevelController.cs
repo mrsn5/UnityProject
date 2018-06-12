@@ -12,9 +12,17 @@ public class LevelController : MonoBehaviour {
     public int numberOfFruits = 0;
     public int fruits = 0;
     public int gems = 0;
+    public int lives = 3;
 
     public Text coinsText;
     public Text fruitsText;
+    public Image[] heartsImages;
+    public Image[] gemsImages;
+
+    public Sprite noHeart;
+    public Sprite noGem;
+    public Sprite heartSprite;
+    public Sprite[] gemSprites;
 
     void Awake()
     {
@@ -25,6 +33,7 @@ public class LevelController : MonoBehaviour {
     {
         coinsText.text = coins.ToString("D4");
         fruitsText.text = string.Format("{0}/{1}", fruits, numberOfFruits);
+
     }
 
     public void setStartPosition(Vector3 pos)
@@ -35,6 +44,8 @@ public class LevelController : MonoBehaviour {
     public void Respawn(HeroRabbit rabbit)
     {
         rabbit.transform.position = this.startingPosition;
+        lives--;
+        heartsImages[lives].sprite = noHeart;
     }
 
     public void addCoins(int n) 
@@ -49,7 +60,8 @@ public class LevelController : MonoBehaviour {
 
     public void addGems(int n)
     {
-        gems += n;
+        gems++;
+        gemsImages[n].sprite = gemSprites[n];
     }
 
     public void incrementFruitNumber() 
