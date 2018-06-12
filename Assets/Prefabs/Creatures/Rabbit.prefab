@@ -120,6 +120,10 @@ MonoBehaviour:
   speed: 3
   maxJumpTime: 2
   jumpSpeed: 3
+  maxInvincibleTime: 4
+  isBig: 1
+  isDead: 0
+  isInvinc: 0
 --- !u!212 &212862880099156584
 SpriteRenderer:
   m_ObjectHideFlags: 1

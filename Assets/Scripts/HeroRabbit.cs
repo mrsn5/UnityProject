@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HeroRabbit : MonoBehaviour
 {
+    public static HeroRabbit lastRabbit = null;
 
     [SerializeField]
     private float speed = 3f;
@@ -29,6 +30,11 @@ public class HeroRabbit : MonoBehaviour
     private Transform heroParent = null;
 
     private Vector3 defaultSize;
+
+    void Awake()
+    {
+        lastRabbit = this;
+    }
 
     void Start()
     {
@@ -92,15 +98,6 @@ public class HeroRabbit : MonoBehaviour
         // Animation
         animator.SetBool("isRunning", Mathf.Abs(value) > 0);
         animator.SetBool("isJumping", !isGrounded);
-
-        // Respawn
-        if (isDead && Input.GetKeyDown("space"))
-        {
-            isBig = true;
-            isDead = false;
-            animator.SetBool("isDead", false);
-            LevelController.current.Respawn(this);
-        }
     }
 
     private bool Grounded() 
@@ -110,8 +107,8 @@ public class HeroRabbit : MonoBehaviour
         int layer_id = 1 << LayerMask.NameToLayer("Ground");
         RaycastHit2D hit1 = Physics2D.Linecast(from - new Vector3(-.1f, 0f, 0f), to - new Vector3(-.1f, 0f, 0f), layer_id);
         RaycastHit2D hit2 = Physics2D.Linecast(from - new Vector3(.1f, 0f, 0f), to - new Vector3(.1f, 0f, 0f), layer_id);
-        Debug.DrawLine(from, to - new Vector3(-.1f, 0f, 0f), Color.red);
-        Debug.DrawLine(from, to - new Vector3(.1f, 0f, 0f), Color.red);
+        Debug.DrawLine(from - new Vector3(-.1f, 0f, 0f), to - new Vector3(-.1f, 0f, 0f), Color.red);
+        Debug.DrawLine(from - new Vector3(.1f, 0f, 0f), to - new Vector3(.1f, 0f, 0f), Color.red);
 
         if (hit1 || hit2)
         {
@@ -165,15 +162,55 @@ public class HeroRabbit : MonoBehaviour
         } else Kill();
     }
 
-    public void Kill()
-    {
+    private IEnumerator KillCoroutine()
+    { 
         isDead = true;
         animator.SetBool("isDead", true);
+        yield return new WaitForSeconds(1f);
+        isBig = true;
+        isDead = false;
+        animator.SetBool("isDead", false);
+        LevelController.current.Respawn(this);
+
+    }
+
+    public void Kill()
+    {
+        StartCoroutine(KillCoroutine());
     }
 
     public bool isInvincible()
     {
         return isInvinc;
     }
+
+    public bool IsDead() 
+    {
+        return isDead;
+    }
+
+    public void Jump() 
+    {
+        StartCoroutine(JumpCoroutine());
+    }
+
+    private IEnumerator JumpCoroutine()
+    {
+        jumpTime = 0;
+        while (true)
+        {
+            jumpTime += Time.deltaTime;
+            if (jumpTime < 1f)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpSpeed * (1.0f - jumpTime / 1f));
+                yield return null;
+            } else {
+                jumpActive = false;
+                jumpTime = 0;
+                break;
+            }
+        }
+    }
+
 
 }
