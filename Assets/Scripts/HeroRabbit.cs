@@ -41,7 +41,8 @@ public class HeroRabbit : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        LevelController.current.setStartPosition(rb.transform.position);
+        if (LevelController.current != null) 
+            LevelController.current.setStartPosition(rb.transform.position);
         rb.freezeRotation = true;
         heroParent = transform.parent;
         defaultSize = transform.lossyScale;

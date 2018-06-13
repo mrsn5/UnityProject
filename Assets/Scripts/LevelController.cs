@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour {
 
@@ -45,7 +46,9 @@ public class LevelController : MonoBehaviour {
     {
         rabbit.transform.position = this.startingPosition;
         lives--;
+        if (lives==0) SceneManager.LoadScene("Level_Picker");
         heartsImages[lives].sprite = noHeart;
+
     }
 
     public void addCoins(int n) 
