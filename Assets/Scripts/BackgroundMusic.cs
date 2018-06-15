@@ -13,4 +13,10 @@ public class BackgroundMusic : MonoBehaviour {
         musicSource.loop = true;
         musicSource.Play();
 	}
+
+    private void Update()
+    {
+        if (!musicSource.isPlaying && SoundManager.Instance.isMusicOn()) musicSource.Play();
+        if (!SoundManager.Instance.isMusicOn()) musicSource.Stop();
+    }
 }

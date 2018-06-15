@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System;
 
 public class LevelController : MonoBehaviour {
 
@@ -18,8 +15,12 @@ public class LevelController : MonoBehaviour {
 
     public Text coinsText;
     public Text fruitsText;
+    public Text coinsTextPopUp;
+    public Text fruitsTextPopUp;
+
     public Image[] heartsImages;
     public Image[] gemsImages;
+    public Image[] gemsImagesPopUp;
 
     public Sprite noHeart;
     public Sprite noGem;
@@ -31,6 +32,7 @@ public class LevelController : MonoBehaviour {
 
     void Awake()
     {
+        SoundManager.Instance.setMusicOn(false);
         current = this;
         levelName = SceneManager.GetActiveScene().name;
         Load();
@@ -40,6 +42,8 @@ public class LevelController : MonoBehaviour {
     {
         coinsText.text = coins.ToString("D4");
         fruitsText.text = string.Format("{0}/{1}", fruits, numberOfFruits);
+        coinsTextPopUp.text = coins.ToString("D4");
+        fruitsTextPopUp.text = string.Format("{0}/{1}", fruits, numberOfFruits);
     }
 
     public void setStartPosition(Vector3 pos)
@@ -95,6 +99,7 @@ public class LevelController : MonoBehaviour {
     {
         gems++;
         gemsImages[n].sprite = gemSprites[n];
+        gemsImagesPopUp[n].sprite = gemSprites[n];
     }
 
     public void incrementFruitNumber() 
