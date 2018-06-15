@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class LevelController : MonoBehaviour {
 
@@ -25,16 +26,20 @@ public class LevelController : MonoBehaviour {
     public Sprite heartSprite;
     public Sprite[] gemSprites;
 
+    private LevelStats stats;
+    private string levelName;
+
     void Awake()
     {
         current = this;
+        levelName = SceneManager.GetActiveScene().name;
+        Load();
     }
 
     void Update()
     {
         coinsText.text = coins.ToString("D4");
         fruitsText.text = string.Format("{0}/{1}", fruits, numberOfFruits);
-
     }
 
     public void setStartPosition(Vector3 pos)
@@ -48,7 +53,30 @@ public class LevelController : MonoBehaviour {
         lives--;
         if (lives==0) SceneManager.LoadScene("Level_Picker");
         heartsImages[lives].sprite = noHeart;
+    }
 
+    public void Load()
+    {
+        this.stats = LevelStats.Load(levelName);
+        if (this.stats == null) this.stats = new LevelStats();
+    }
+
+    public void Save()
+    {
+        if (stats.levelPassed)
+        {
+            if (gems == 3) stats.hasCrystals = true;
+            if (fruits == numberOfFruits) stats.hasAllFruits = true;
+            PlayerPrefs.SetString(levelName, JsonUtility.ToJson(this.stats));
+
+            PlayerPrefs.SetInt("coins", PlayerPrefs.GetInt("coins", 0) + coins);
+            PlayerPrefs.Save();
+        }
+    }
+
+    public void SetLevelPassed()
+    {
+        stats.levelPassed = true;
     }
 
     public void addCoins(int n) 
@@ -56,9 +84,11 @@ public class LevelController : MonoBehaviour {
         coins += n;
     }
 
-    public void addFruits(int n)
+    public void addFruits(int id)
     {
-        fruits += n;
+        fruits++;
+        if (!fruitIsPickedUp(id))
+            stats.collectedFruits.Add(id);
     }
 
     public void addGems(int n)
@@ -70,5 +100,10 @@ public class LevelController : MonoBehaviour {
     public void incrementFruitNumber() 
     {
         numberOfFruits++;
+    }
+
+    public bool fruitIsPickedUp(int id)
+    {
+        return stats.collectedFruits.Contains(id);
     }
 }

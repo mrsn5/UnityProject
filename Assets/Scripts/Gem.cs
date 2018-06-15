@@ -13,4 +13,5 @@ public class Gem : Collectable
         LevelController.current.addGems((int)color);
         this.CollectedHide();
     }
+
 }
