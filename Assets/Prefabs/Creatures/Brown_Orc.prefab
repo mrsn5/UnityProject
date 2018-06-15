@@ -119,6 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveBy: {x: 5, y: 0, z: 0}
   speed: 1
+  attackClip: {fileID: 8300000, guid: ece9b14a232f14f48ab9a5e844cb5daf, type: 3}
   attackInterval: 2
   prefabCarrot: {fileID: 1429281997511974, guid: 49265d31a7ed3495380e9a6377d079de,
     type: 2}

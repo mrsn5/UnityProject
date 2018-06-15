@@ -119,6 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveBy: {x: 5, y: 0, z: 0}
   speed: 1
+  attackClip: {fileID: 8300000, guid: ece9b14a232f14f48ab9a5e844cb5daf, type: 3}
   runSpeed: 1.5
 --- !u!212 &212936274921415804
 SpriteRenderer:

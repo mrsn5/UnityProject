@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Orc : MonoBehaviour {
@@ -19,7 +18,10 @@ public class Orc : MonoBehaviour {
     protected SpriteRenderer sr = null;
     protected Animator animator = null;
 
-	// Use this for initialization
+    [SerializeField]
+    private AudioClip attackClip = null;
+    protected AudioSource attackSource = null;
+
 	public void Start () {
         this.pointA = this.transform.position;
         this.pointB = this.pointA + MoveBy;
@@ -27,6 +29,8 @@ public class Orc : MonoBehaviour {
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         GetComponent<Rigidbody2D>().freezeRotation = true;
+        attackSource = gameObject.AddComponent<AudioSource>();
+        attackSource.clip = attackClip;
 	}
 
     public void Update()
@@ -87,6 +91,7 @@ public class Orc : MonoBehaviour {
             rabbit.Jump();
             Kill();
         } else {
+            if (SoundManager.Instance.isSoundOn()) attackSource.Play();
             animator.SetTrigger("isAttacking");
             rabbit.Kill();
         }

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HeroRabbit : MonoBehaviour
@@ -17,9 +16,10 @@ public class HeroRabbit : MonoBehaviour
 
     private bool isGrounded = false;
     private bool jumpActive = false;
-    public bool isBig = true;
-    public bool isDead = false;
-    public bool isInvinc = false;
+    private bool isBig = true;
+    private bool isDead = false;
+    private bool isInvinc = false;
+    private bool groundSoundPlayed = true;
 
     private float invincibleTime = 0f;
     private float jumpTime = 0f;
@@ -31,6 +31,16 @@ public class HeroRabbit : MonoBehaviour
 
     private Vector3 defaultSize;
 
+    [SerializeField]
+    public AudioClip runClip = null;
+    [SerializeField]
+    public AudioClip dieClip = null;
+    [SerializeField]
+    public AudioClip groundClip = null;
+    private AudioSource runSource = null;
+    private AudioSource dieSource = null;
+    private AudioSource groundSource = null;
+
     void Awake()
     {
         lastRabbit = this;
@@ -39,13 +49,21 @@ public class HeroRabbit : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.freezeRotation = true;
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         if (LevelController.current != null) 
             LevelController.current.setStartPosition(rb.transform.position);
-        rb.freezeRotation = true;
         heroParent = transform.parent;
         defaultSize = transform.lossyScale;
+
+        runSource = gameObject.AddComponent<AudioSource>();
+        runSource.clip = runClip;
+        runSource.loop = true;
+        dieSource = gameObject.AddComponent<AudioSource>();
+        dieSource.clip = dieClip;
+        groundSource = gameObject.AddComponent<AudioSource>();
+        groundSource.clip = groundClip;
     }
 
     void FixedUpdate()
@@ -56,31 +74,35 @@ public class HeroRabbit : MonoBehaviour
         {
             rb.velocity = new Vector2(value * speed, rb.velocity.y);
             sr.flipX = (value > 0) ? false : true;
+            if (!runSource.isPlaying && SoundManager.Instance.isSoundOn()) runSource.Play();
         }
+        else runSource.Stop();
+        if (!isGrounded) runSource.Stop();
+
 
         // Sizing
         SetSize((isBig) ? defaultSize : defaultSize * .7f);
 
         // Jumping
         isGrounded = Grounded();
-        if (Input.GetButtonDown("Jump") && isGrounded && !isDead)
+        if (isGrounded && !groundSoundPlayed && SoundManager.Instance.isSoundOn())
         {
-            jumpActive = true;
+            groundSoundPlayed = true;
+            groundSource.Play();
         }
+        if (Input.GetButtonDown("Jump") && isGrounded && !isDead)
+            jumpActive = true;
 
         if (jumpActive)
-        {
             if (Input.GetButton("Jump")) {
                 jumpTime += Time.deltaTime;
                 if (jumpTime < maxJumpTime)
-                {
                     rb.velocity = new Vector2(rb.velocity.x, jumpSpeed * (1.0f - jumpTime / maxJumpTime));
-                }
             } else {
                 jumpActive = false;
                 jumpTime = 0;
+                groundSoundPlayed = false;
             }
-        }
 
         // Invincible
         if (isInvinc) {
@@ -164,7 +186,8 @@ public class HeroRabbit : MonoBehaviour
     }
 
     private IEnumerator KillCoroutine()
-    { 
+    {
+        if (SoundManager.Instance.isSoundOn()) dieSource.Play();
         isDead = true;
         animator.SetBool("isDead", true);
         yield return new WaitForSeconds(1f);

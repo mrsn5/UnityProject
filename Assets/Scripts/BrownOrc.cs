@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BrownOrc : Orc {
 
@@ -28,6 +26,7 @@ public class BrownOrc : Orc {
 
     void launchCarrot(float direction)
     {
+        if (SoundManager.Instance.isSoundOn()) attackSource.Play();
         GameObject obj = Instantiate(this.prefabCarrot);
         obj.transform.position = this.transform.position + new Vector3(0, 1, 0);
         Carrot carrot = obj.GetComponent<Carrot>();

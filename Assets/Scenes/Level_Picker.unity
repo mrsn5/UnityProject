@@ -892,7 +892,7 @@ GameObject:
   - component: {fileID: 1121329158}
   - component: {fileID: 1121329157}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1044,6 +1044,48 @@ Transform:
   m_Father: {fileID: 1621657511}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1324220091
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4618113010386210, guid: c54f2cd6b91174b9e83342b93f23778b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 1.810457
+      objectReference: {fileID: 0}
+    - target: {fileID: 4618113010386210, guid: c54f2cd6b91174b9e83342b93f23778b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4618113010386210, guid: c54f2cd6b91174b9e83342b93f23778b, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4618113010386210, guid: c54f2cd6b91174b9e83342b93f23778b, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4618113010386210, guid: c54f2cd6b91174b9e83342b93f23778b, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4618113010386210, guid: c54f2cd6b91174b9e83342b93f23778b, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4618113010386210, guid: c54f2cd6b91174b9e83342b93f23778b, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4618113010386210, guid: c54f2cd6b91174b9e83342b93f23778b, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: c54f2cd6b91174b9e83342b93f23778b, type: 2}
+  m_IsPrefabParent: 0
 --- !u!114 &1453803998 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114766544736933448, guid: d3d70cba9669c4fac809b7c98d19991d,
@@ -1266,6 +1308,7 @@ GameObject:
   - component: {fileID: 2061499716}
   - component: {fileID: 2061499718}
   - component: {fileID: 2061499717}
+  - component: {fileID: 2061499719}
   m_Layer: 5
   m_Name: Coins-Text
   m_TagString: Untagged
@@ -1330,3 +1373,14 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2061499715}
+--- !u!114 &2061499719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2061499715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ca3ecfa939064d0899b223ad946f687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
