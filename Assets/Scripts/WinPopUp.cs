@@ -15,17 +15,15 @@ public class WinPopUp : MonoBehaviour {
         Instance = this;
         winSourse = gameObject.AddComponent<AudioSource>();
         winSourse.clip = winClip;
+        winSourse.playOnAwake = false;
         gameObject.SetActive(false);
     }
 
     public void Open()
     {
         gameObject.SetActive(true);
-        if (SoundManager.Instance.isMusicOn())
-        {
-            Debug.Log(1);
-            //winSourse.Play();
-        }
+        if (SoundManager.Instance.isSoundOn()) winSourse.Play();
+        
     }
 
     public void Next()

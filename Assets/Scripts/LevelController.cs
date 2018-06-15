@@ -55,8 +55,12 @@ public class LevelController : MonoBehaviour {
     {
         rabbit.transform.position = this.startingPosition;
         lives--;
-        if (lives==0) SceneManager.LoadScene("Level_Picker");
-        heartsImages[lives].sprite = noHeart;
+        if (lives == 0)
+        {
+            rabbit.Kill();
+            LosePopUp.Instance.Open();
+        }
+        if (lives >= 0) heartsImages[lives].sprite = noHeart;
     }
 
     public void Load()
