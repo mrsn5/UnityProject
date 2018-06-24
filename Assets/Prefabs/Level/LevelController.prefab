@@ -58,11 +58,17 @@ MonoBehaviour:
   lives: 3
   coinsText: {fileID: 0}
   fruitsText: {fileID: 0}
+  coinsTextPopUp: {fileID: 0}
+  fruitsTextPopUp: {fileID: 0}
   heartsImages:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   gemsImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  gemsImagesPopUp:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
